@@ -13,7 +13,6 @@ namespace AdminPanel
             // Ініціалізація API клієнта
             ApiClient = new ApiClient("http://192.168.0.105:8000");
             AuthService = new AuthService(ApiClient);
-            base.OnStartup(e);
             // Показати вікно логіну
             var loginWindow = new LoginWindow();
             loginWindow.Show();

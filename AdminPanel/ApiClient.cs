@@ -42,6 +42,19 @@ namespace AdminPanel
             return JsonSerializer.Deserialize<T>(responseContent);
         }
 
+        public async Task<T> PostFormUrlEncodedAsync<T>(string endpoint, Dictionary<string, string> formData)
+        {
+            using var content = new FormUrlEncodedContent(formData);
+            content.Headers.Clear();
+            content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+            var response = await _httpClient.PostAsync($"{_baseUrl}{endpoint}", content);
+            response.EnsureSuccessStatusCode();
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(responseContent);
+        }
+
         public async Task<T> PutAsync<T>(string endpoint, object data)
         {
             var json = JsonSerializer.Serialize(data);

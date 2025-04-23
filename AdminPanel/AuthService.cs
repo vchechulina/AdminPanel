@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,29 +13,41 @@ namespace AdminPanel
 
         public AuthService(ApiClient apiClient)
         {
-            _apiClient = apiClient;
+            _apiClient = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
         }
 
         public async Task<string> Login(string username, string password)
         {
             try
             {
-                var loginData = new
+                // Підготовка даних для x-www-form-urlencoded
+                var formData = new Dictionary<string, string>
                 {
-                    username = username,
-                    password = password,
-                    grant_type = "password"
+                    {"grant_type", "password"},
+                    {"username", username},
+                    {"password", password}
+                    // Додаткові параметри (якщо потрібні):
+                    // {"scope", ""},
+                    // {"client_id", ""},
+                    // {"client_secret", ""}
                 };
 
-                var json = JsonSerializer.Serialize(loginData);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                // Спеціальний метод тільки для логіну
+                var response = await _apiClient.PostFormUrlEncodedAsync<TokenResponse>(LoginEndpoint, formData);
 
-                var response = await _apiClient.PostAsync<TokenResponse>(LoginEndpoint, loginData);
+                if (response?.AccessToken == null)
+                {
+                    MessageBox.Show("Invalid server response", "Error",
+                                  MessageBoxButton.OK, MessageBoxImage.Error);
+                    return null;
+                }
+
                 return response.AccessToken;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Помилка авторизації: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Login failed: {ex.Message}", "Error",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
             }
         }

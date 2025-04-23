@@ -69,8 +69,6 @@ namespace AdminPanel
             var confirmExit = new ConfirmExitWindow();
             if (confirmExit.ShowDialog() == true)
             {
-                App.TokenTimer?.Stop();
-                new LoginWindow().Show();
                 Close();
             }
         }

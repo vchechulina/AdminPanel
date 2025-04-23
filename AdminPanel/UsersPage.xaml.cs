@@ -175,6 +175,7 @@ namespace AdminPanel
 
         public class UserDto
         {
+            [JsonPropertyName("id")]
             public int Id { get; set; }
 
             [JsonPropertyName("first")]

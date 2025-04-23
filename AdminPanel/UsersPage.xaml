@@ -18,7 +18,7 @@
         <TextBlock Text="Керування користувачами" FontSize="24" FontWeight="Bold" Margin="0,0,0,16"/>
 
         <ScrollViewer Grid.Row="1">
-            <StackPanel>
+            <StackPanel x:Name="UsersStackPanel">
                 <Border BorderBrush="#741FAD" BorderThickness="1" Padding="8" Margin="0,0,0,8" CornerRadius="4">
                     <Grid>
                         <Grid.ColumnDefinitions>

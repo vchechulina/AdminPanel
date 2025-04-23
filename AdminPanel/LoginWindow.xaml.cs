@@ -1,10 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace AdminPanel
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         public LoginWindow()
@@ -12,29 +10,49 @@ namespace AdminPanel
             InitializeComponent();
         }
 
-        private void Login_Click(object sender, RoutedEventArgs e)
+        private async void Login_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
             string password = txtPassword.Password;
 
-            // Тут повинна бути ваша реальна логіка перевірки логіну та паролю
-            if (username == "admin" && password == "password") // Замініть на реальну перевірку
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                // Успішна авторизація - відкриваємо головне вікно та закриваємо вікно логіну
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                Close();
+                lblErrorMessage.Text = "Будь ласка, введіть ім'я користувача та пароль";
+                lblErrorMessage.Visibility = Visibility.Visible;
+                return;
             }
-            else
+
+            try
             {
-                lblErrorMessage.Text = "Невірне ім'я користувача або пароль.";
+                var token = await App.AuthService.Login(username, password);
+                if (token != null)
+                {
+                    App.ApiClient.SetAuthToken(token);
+
+                    // Ініціалізуємо таймер для токена (60 хвилин)
+                    App.InitializeTokenTimer(60,
+                        () => MessageBox.Show("Ваша сесія закінчиться через 5 хвилин. Будь ласка, збережіть свою роботу та увійдіть знову.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning),
+                        () => {
+                            MessageBox.Show("Ваша сесія закінчилася. Будь ласка, увійдіть знову.", "Сесія завершена", MessageBoxButton.OK, MessageBoxImage.Information);
+                            new LoginWindow().Show();
+                            Application.Current.MainWindow?.Close();
+                        });
+
+                    // Успішна авторизація - відкриваємо головне вікно
+                    var mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    Close();
+                }
+            }
+            catch
+            {
+                lblErrorMessage.Text = "Невірне ім'я користувача або пароль";
                 lblErrorMessage.Visibility = Visibility.Visible;
             }
         }
-        private void txtUsername_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+
+        private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Тут ви можете додати код, який буде виконуватися при зміні тексту в полі txtUsername
-            // Наприклад, ви можете очищати повідомлення про помилку при введенні нових даних.
             lblErrorMessage.Visibility = Visibility.Collapsed;
         }
     }

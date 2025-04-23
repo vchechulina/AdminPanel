@@ -3,15 +3,11 @@ using System.Windows.Controls;
 
 namespace AdminPanel
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            // Завантаження початкової сторінки (можна змінити)
             MainFrame.Navigate(new UsersPage());
         }
 
@@ -27,7 +23,11 @@ namespace AdminPanel
 
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
-            Close();
+            var confirmExit = new ConfirmExitWindow();
+            if (confirmExit.ShowDialog() == true)
+            {
+                Close();
+            }
         }
 
         private void DragWindow(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -45,25 +45,26 @@ namespace AdminPanel
 
         private void NavigateToRoles(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new RolesPage()); // Створіть RolesPage.xaml та RolesPage.xaml.cs
+            MainFrame.Navigate(new RolesPage());
         }
 
         private void NavigateToAccessRights(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new AccessRightsPage()); // Створіть AccessRightsPage.xaml та AccessRightsPage.xaml.cs
+            MainFrame.Navigate(new AccessRightsPage());
         }
 
         private void NavigateToHistory(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new HistoryPage()); // Створіть HistoryPage.xaml та HistoryPage.xaml.cs
+            MainFrame.Navigate(new HistoryPage());
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            ConfirmExitWindow confirmExitWindow = new ConfirmExitWindow();
-            if (confirmExitWindow.ShowDialog() == true)
+            var confirmExit = new ConfirmExitWindow();
+            if (confirmExit.ShowDialog() == true)
             {
-                // Тут можна додати логіку виходу з акаунту
+                App.TokenTimer?.Stop();
+                new LoginWindow().Show();
                 Close();
             }
         }

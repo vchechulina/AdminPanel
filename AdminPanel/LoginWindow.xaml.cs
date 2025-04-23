@@ -39,7 +39,7 @@ namespace AdminPanel
                         });
 
                     // Успішна авторизація - відкриваємо головне вікно
-                    var mainWindow = new MainWindow();
+                    var mainWindow = new MainWindow(App.AuthService.CurrentUser);
                     mainWindow.Show();
                     Close();
                 }

@@ -9,6 +9,7 @@ namespace AdminPanel
         private readonly System.Timers.Timer _timer;
         private readonly Action _onTokenExpired;
         private readonly Action _onTokenAboutToExpire;
+        private DateTime _expirationTime;
         private bool _warningShown = false;
 
         public TokenTimerService(Action onTokenAboutToExpire, Action onTokenExpired)
@@ -22,11 +23,7 @@ namespace AdminPanel
 
         public void Start(int tokenLifetimeMinutes)
         {
-            // Встановлюємо час сповіщення про закінчення (за 5 хвилин)
-            var warningTime = (tokenLifetimeMinutes - 5) * 60 * 1000;
-            var expirationTime = tokenLifetimeMinutes * 60 * 1000;
-
-            _timer.Interval = Math.Min(60000, warningTime); // Перевіряємо не рідше ніж раз на хвилину
+            _expirationTime = DateTime.Now.AddMinutes(tokenLifetimeMinutes);
             _warningShown = false;
             _timer.Start();
         }
@@ -35,12 +32,14 @@ namespace AdminPanel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (!_warningShown)
+                var timeLeft = _expirationTime - DateTime.Now;
+
+                if (!_warningShown && timeLeft.TotalMinutes <= 5)
                 {
                     _warningShown = true;
                     _onTokenAboutToExpire?.Invoke();
                 }
-                else
+                else if (timeLeft.TotalMinutes <= 0)
                 {
                     _timer.Stop();
                     _onTokenExpired?.Invoke();

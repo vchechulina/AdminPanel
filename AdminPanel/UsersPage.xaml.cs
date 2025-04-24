@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace AdminPanel
             try
             {
                 // Завантаження користувачів з API
-                var users = await App.ApiClient.GetAsync<List<UserDto>>("/users/");
+                var users = await App.ApiClient.GetAsync<List<UserDto>>("/users-with-roles/");
                 UsersStackPanel.Children.Clear();
 
                 foreach (var user in users)
@@ -71,8 +72,14 @@ namespace AdminPanel
                 Text = user.Email,
                 Foreground = System.Windows.Media.Brushes.Gray
             };
+            var roleText = new TextBlock
+            {
+                Text = $"Роль: {user.RoleName}",
+                Foreground = System.Windows.Media.Brushes.Gray
+            };
             stackPanel.Children.Add(nameText);
             stackPanel.Children.Add(emailText);
+            stackPanel.Children.Add(roleText);
 
             // Кнопки дій
             var actionPanel = new StackPanel { Orientation = Orientation.Horizontal };
@@ -168,11 +175,21 @@ namespace AdminPanel
 
         public class UserDto
         {
+            [JsonPropertyName("id")]
             public int Id { get; set; }
+
+            [JsonPropertyName("first")]
             public string First { get; set; }
+
+            [JsonPropertyName("second")]
             public string Second { get; set; }
+
+            [JsonPropertyName("email")]
             public string Email { get; set; }
+            [JsonPropertyName("role")]
             public int Role { get; set; }
+            [JsonPropertyName("role_name")]
+            public string RoleName { get; set; }
         }
     }
 }

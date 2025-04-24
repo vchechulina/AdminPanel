@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AdminPanel
@@ -70,5 +71,19 @@ namespace AdminPanel
             var response = await _httpClient.DeleteAsync($"{_baseUrl}{endpoint}");
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task<RoleDto> GetRoleAsync(int roleId)
+        {
+            return await GetAsync<RoleDto>($"/roles/{roleId}");
+        }
+
+        public class RoleDto
+        {
+            [JsonPropertyName("id")]
+            public int Id { get; set; }
+            [JsonPropertyName("name")]
+            public string Name { get; set; }
+        }
+
     }
 }

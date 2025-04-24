@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using static AdminPanel.UsersPage;
 
 namespace AdminPanel
 {
@@ -41,7 +43,8 @@ namespace AdminPanel
                                   MessageBoxButton.OK, MessageBoxImage.Error);
                     return null;
                 }
-
+                App.ApiClient.SetAuthToken(response.AccessToken);
+                CurrentUser = await _apiClient.GetAsync<UserDto>("/users/me/");
                 return response.AccessToken;
             }
             catch (Exception ex)
@@ -52,9 +55,13 @@ namespace AdminPanel
             }
         }
 
+        public UserDto CurrentUser { get; private set; }
+
         private class TokenResponse
         {
+            [JsonPropertyName("access_token")]
             public string AccessToken { get; set; }
+            [JsonPropertyName("token_type")]
             public string TokenType { get; set; }
         }
     }

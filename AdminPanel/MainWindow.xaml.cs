@@ -1,13 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
+
 namespace AdminPanel
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly UsersPage.UserDto _currentUser;
+        public MainWindow(UsersPage.UserDto currnetUser)
         {
             InitializeComponent();
+            _currentUser = currnetUser;
+
+            UserNameTextBlock.Text = $"{_currentUser.First} {_currentUser.Second}";
+
             MainFrame.Navigate(new UsersPage());
         }
 
@@ -63,8 +69,6 @@ namespace AdminPanel
             var confirmExit = new ConfirmExitWindow();
             if (confirmExit.ShowDialog() == true)
             {
-                App.TokenTimer?.Stop();
-                new LoginWindow().Show();
                 Close();
             }
         }

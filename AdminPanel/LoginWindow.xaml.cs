@@ -55,5 +55,13 @@ namespace AdminPanel
         {
             lblErrorMessage.Visibility = Visibility.Collapsed;
         }
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            var confirmExit = new ConfirmExitWindow();
+            if (confirmExit.ShowDialog() == true)
+            {
+                Close();
+            }
+        }
     }
 }

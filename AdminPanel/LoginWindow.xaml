@@ -18,15 +18,28 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Авторизація" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <!-- Додана панель з кнопкою закриття -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource MaterialDesignIconButton}" Foreground="White" Padding="3 0" Click="CloseWindow" Height="25" Width="30">
+                        <materialDesign:PackIcon Kind="Close" VerticalAlignment="Center" Height="14" Width="14"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
 
-            <TextBox x:Name="txtUsername" Grid.Row="1" materialDesign:HintAssist.Hint="Ім'я користувача" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" CaretBrush="White" SelectionBrush="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,10"/>
+            <TextBlock Text="Авторизація" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20" Grid.Row="1"/>
 
-            <PasswordBox x:Name="txtPassword" Grid.Row="2" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Foreground="White" CaretBrush="White" SelectionBrush="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,20"/>
+            <TextBox x:Name="txtUsername" Grid.Row="2" materialDesign:HintAssist.Hint="Ім'я користувача" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" CaretBrush="White" SelectionBrush="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,10"/>
 
-            <Button Grid.Row="3" Content="Увійти" Style="{StaticResource MaterialDesignRaisedButton}" Background="#741FAD" Foreground="White" Click="Login_Click"/>
+            <PasswordBox x:Name="txtPassword" Grid.Row="3" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Foreground="White" CaretBrush="White" SelectionBrush="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,20"/>
 
-            <TextBlock x:Name="lblErrorMessage" Grid.Row="4" Foreground="#FF4081" HorizontalAlignment="Center" Margin="0,10,0,0" Visibility="Collapsed"/>
+            <Button Grid.Row="4" Content="Увійти" Style="{StaticResource MaterialDesignRaisedButton}" Background="#741FAD" Foreground="White" Click="Login_Click"/>
+
+            <TextBlock x:Name="lblErrorMessage" Grid.Row="5" Foreground="#FF4081" HorizontalAlignment="Center" Margin="0,10,0,0" Visibility="Collapsed"/>
         </Grid>
     </Border>
 </Window>

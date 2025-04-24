@@ -18,17 +18,17 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Додати нового користувача" FontSize="20" FontWeight="Bold" Margin="0,0,0,16"/>
+        <TextBlock Text="Додати нового користувача" FontSize="20" FontWeight="Bold" Margin="0,0,0,16" Foreground="White"/>
 
-        <TextBox x:Name="FirstNameTextBox" Grid.Row="1" materialDesign:HintAssist.Hint="Ім'я" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8"/>
-        <TextBox x:Name="LastNameTextBox" Grid.Row="2" materialDesign:HintAssist.Hint="Прізвище" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8"/>
-        <TextBox x:Name="EmailTextBox" Grid.Row="3" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8"/>
-        <PasswordBox x:Name="PasswordBox" Grid.Row="4" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,0,0,8"/>
-        <ComboBox x:Name="RoleComboBox" Grid.Row="5" materialDesign:HintAssist.Hint="Роль" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0,0,0,16"/>
+        <TextBox x:Name="FirstNameTextBox" Grid.Row="1" materialDesign:HintAssist.Hint="Ім'я" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8" Foreground="White"/>
+        <TextBox x:Name="LastNameTextBox" Grid.Row="2" materialDesign:HintAssist.Hint="Прізвище" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8" Foreground="White"/>
+        <TextBox x:Name="EmailTextBox" Grid.Row="3" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8" Foreground="White"/>
+        <PasswordBox x:Name="PasswordBox" Grid.Row="4" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,0,0,8" Foreground="White"/>
+        <ComboBox x:Name="RoleComboBox" Grid.Row="5" materialDesign:HintAssist.Hint="Роль" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0,0,0,16" Foreground="White"/>
 
         <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Style="{StaticResource MaterialDesignOutlinedButton}" Content="Скасувати" IsCancel="True" Margin="0,0,8,0"/>
-            <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="Додати" Background="#741FAD" Click="AddButton_Click"/>
+            <Button Style="{StaticResource MaterialDesignOutlinedButton}" Content="Скасувати" IsCancel="True" Margin="0,0,8,0" Foreground="White"/>
+            <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="Додати" Background="#741FAD" Click="AddButton_Click" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace AdminPanel
 {
@@ -61,7 +62,9 @@ namespace AdminPanel
 
         public class RoleDto
         {
+            [JsonPropertyName("id")]
             public int Id { get; set; }
+            [JsonPropertyName("name")]
             public string Name { get; set; }
         }
     }
